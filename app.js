@@ -50,7 +50,7 @@ function myFunction() {
       button.style.backgroundColor = "";
     }, 400);
   } else {
-    window.location.href = "index2.html";
+	//
   }
 }
 // document.getElementById('btn-modal').addEventListener('click', function(event){
