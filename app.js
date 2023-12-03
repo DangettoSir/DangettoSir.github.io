@@ -1,4 +1,36 @@
- 
+document.getElementById('form').addEventListener('submit', function(event) {
+  event.preventDefault(); // Предотвращаем отправку формы по умолчанию
+
+  // Получаем значения полей формы
+  var username = document.getElementById('user-box-input').value;
+
+  // Создаем объект с данными пользователя
+  var user = {
+    username: username,
+  };
+
+  // Преобразуем объект в JSON-строку
+  var token = JSON.stringify(user);
+
+  // Сохраняем токен в сессии
+  sessionStorage.setItem('token', token);
+	console.log('TOKEN',token)
+
+	fetch('http://localhost:8080/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ token: token }),
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Обработка ответа от сервера
+    })
+    .catch(error => {
+      // Обработка ошибок
+    });
+});
  
  
  
