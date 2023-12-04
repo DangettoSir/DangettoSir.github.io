@@ -1,4 +1,4 @@
-window.onload = chechAccessMiddleware
+window.onload = checkAccessMiddleware;
 
 function checkAccessMiddleware() {
   const access_token = localStorage.getItem('access_token');
