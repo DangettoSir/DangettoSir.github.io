@@ -1,36 +1,35 @@
-window.onload = checkLoginStatus
+window.onload = chechAccessMiddleware
 
-function checkLoginStatus() {
-  // Отправляем запрос на первый сайт для проверки статуса пользователя
-  fetch('https://dangettosir.github.io/idex1.html', {
-    method: 'GET',
-    credentials: 'include'  // Включение передачи куки для авторизации
+function checkAccessMiddleware() {
+  const access_token = localStorage.getItem('access_token');
+
+  if (!access_token) {
+    // Перенаправляем на страницу логина на первом сайте
+    window.location.href = 'https://dangettosir.github.io/idex1.html';
+    return;
+  }
+
+  // Проверка валидности токена доступа на Java-сервере
+  fetch('http://your-java-server.com/validate', {
+    method: 'POST',
+    body: JSON.stringify({ access_token }),
+    headers: { 'Content-Type': 'application/json' }
   })
   .then(response => {
     if (response.ok) {
-      // Пользователь залогинен на первом сайте, разрешаем доступ
-      // Ваш код для разрешения доступа здесь
-      allowAccess();
+      // Токен доступа валиден, продолжаем обработку запроса
+      return response.json();
     } else {
-      // Пользователь не залогинен на первом сайте, блокируем доступ
-      // Ваш код для блокировки доступа здесь
-      blockAccess();
+      throw new Error('Access token validation failed');
     }
   })
+  .then(data => {
+    // Токен доступа валиден, продолжаем обработку запроса
+    someHandler();
+  })
   .catch(error => {
-    // Обработка ошибок при запросе
-    console.log('Ошибка проверки статуса входа:', error);
+    // Токен доступа недействителен, перенаправляем на страницу логина на первом сайте
+    console.error(error);
+    window.location.href = 'http://your-first-site.com/login';
   });
-}
-
-function allowAccess() {
-  // Ваш код для разрешения доступа здесь
-  console.log('Доступ разрешен');
-  // Например, показать контент для залогиненных пользователей
-}
-
-function blockAccess() {
-  // Ваш код для блокировки доступа здесь
-  console.log('Доступ заблокирован');
-  // Например, перенаправить на страницу входа
 }
