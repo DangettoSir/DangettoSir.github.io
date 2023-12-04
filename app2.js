@@ -1,3 +1,5 @@
+window.onload = checkLoginStatus
+
 function checkLoginStatus() {
   // Отправляем запрос на первый сайт для проверки статуса пользователя
   fetch('https://dangettosir.github.io/idex1.html', {
