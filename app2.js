@@ -1,6 +1,6 @@
 function checkLoginStatus() {
   // Отправляем запрос на первый сайт для проверки статуса пользователя
-  fetch('http://website1.com/checkLoginStatus', {
+  fetch('https://dangettosir.github.io/idex1.html', {
     method: 'GET',
     credentials: 'include'  // Включение передачи куки для авторизации
   })
