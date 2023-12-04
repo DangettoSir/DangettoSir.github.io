@@ -1,4 +1,4 @@
-document.getElementById('form').addEventListener('submit', function(event) {
+document.getElementById('user-box-click').addEventListener('click', function(event) {
   event.preventDefault(); // Предотвращаем отправку формы по умолчанию
 
   // Получаем значения полей формы
