@@ -15,7 +15,7 @@ xhr.onload = function () {
 };
 
 // Устанавливаем адрес и метод запроса
-xhr.open("GET", "26.79.49.251:8080", true);
+xhr.open("GET", "http://localhost:8080", true);
 
 // Отправляем запрос
 function sendToken() {
@@ -32,7 +32,7 @@ function sendToken() {
 
   // Создаем объект запроса
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", "26.79.49.251:8080", true);
+  xhr.open("POST", "http://localhost:8080", true);
 
   // Устанавливаем заголовок Content-Type для указания типа данных
   xhr.setRequestHeader("Content-Type", "application/json");
