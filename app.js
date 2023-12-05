@@ -1,36 +1,84 @@
-document.getElementById('user-box-click').addEventListener('click', function(event) {
-  event.preventDefault(); // Предотвращаем отправку формы по умолчанию
+// Создаем объект XMLHttpRequest для отправки запросов
+var xhr = new XMLHttpRequest();
 
-  // Получаем значения полей формы
-  var username = document.getElementById('user-box-input').value;
+// Устанавливаем обработчик события при приходе ответа от сервера
+xhr.onload = function () {
+  // Проверяем статус ответа
+  if (xhr.status >= 200 && xhr.status < 300) {
+    // Запрос успешно выполнен
+    console.log("Request successful!");
+    console.log(xhr.responseText);
+  } else {
+    // Возникла ошибка
+    console.log("Request failed with status " + xhr.status);
+  }
+};
 
-  // Создаем объект с данными пользователя
-  var user = {
-    username: username,
+// Устанавливаем адрес и метод запроса
+xhr.open("GET", "http://localhost:8080", true);
+
+// Отправляем запрос
+function sendToken() {
+  // Создаем объект с данными
+  var data = {
+    token: [{
+			username: "artemix",
+			password: 'sosubibu228'
+		}]
   };
 
   // Преобразуем объект в JSON-строку
-  var token = JSON.stringify(user);
+  var jsonData = JSON.stringify(data);
 
-  // Сохраняем токен в сессии
-  sessionStorage.setItem('token', token);
-	console.log('TOKEN',token)
+  // Создаем объект запроса
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "http://localhost:8080", true);
 
-	fetch('http://localhost:8080/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ token: token }),
-  })
-    .then(response => response.json())
-    .then(data => {
-      // Обработка ответа от сервера
-    })
-    .catch(error => {
-      // Обработка ошибок
-    });
+  // Устанавливаем заголовок Content-Type для указания типа данных
+  xhr.setRequestHeader("Content-Type", "application/json");
+
+  // Отправляем запрос с JSON-строкой в теле
+  xhr.send(jsonData);
+}
+
+// Вызываем функцию для отправки токена
+
+
+
+document.getElementById('user-box-click').addEventListener('click', function(event) {
+  event.preventDefault(); // Предотвращаем отправку формы по умолчанию
+ sendToken();
 });
+//   // Получаем значения полей формы
+//   var username = document.getElementById('user-box-input').value;
+
+//   // Создаем объект с данными пользователя
+//   var user = {
+//     username: username,
+//   };
+
+//   // Преобразуем объект в JSON-строку
+//   var token = JSON.stringify(user);
+
+//   // Сохраняем токен в сессии
+//   sessionStorage.setItem('token', token);
+// 	console.log('TOKEN',token)
+
+// 	fetch('http://localhost:8080/', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({ token: token }),
+//   })
+//     .then(response => response.json())
+//     .then(data => {
+//       // Обработка ответа от сервера
+//     })
+//     .catch(error => {
+//       // Обработка ошибок
+//     });
+// });
  
  
  
